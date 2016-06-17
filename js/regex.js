@@ -188,13 +188,11 @@ $( "#target, #pattern" ).keyup(function() {
 	if ($( "#pattern" ).val().length > 2){
   		executa(event);
 	}
-
-	
 });
 
 var accordions = [
 	{"name":"basic", "list":[
-		{"name":"filho1", "text":"texto", "pattern":"xxxx"},
+		{"name":"file", "text":"image.png", "pattern":".*png"},
 		{"name":"filho2", "text":"texto", "pattern":"xxxx"},
 		{"name":"filho3", "text":"texto", "pattern":"xxxx"},
 		{"name":"filho4", "text":"texto", "pattern":"xxxx"},
@@ -206,53 +204,66 @@ var accordions = [
 var acc = $("#accordion");
 
 $(function() {
-  for (var i = 0; i < accordions.length; i++) {
-		makePanel (accordions[i]);
-	}
+	makePanels ();
 });
 
 
-function makePanel (item){
+function makePanels (item){
 
-	var label = item.name;
+	for (var i = 0; i < accordions.length; i++) {
 
-	var list = $('<ul>').addClass('numerics');
+		var item = accordions[i];
 
-	$(item.list).each(function(index, el) {
-		list.append($("<li>").append($("<a>").text(el.name)));
-	});
+		var label = item.name;
 
-	var panel = $("<div>").addClass('panel panel-default');
+		var list = $('<ul>').addClass('numerics');
 
-	panel.append(
-		$("<div>").addClass('panel-heading')
-			.append(
-				$('<div>').addClass('panel-title')
-					.append(
-						$('<a>')
-							.attr("data-toggle", "collapse")
-							.attr("data-parent", "#accordion")
-							.attr("aria-expanded", "false")
-							.attr("href", "#collapse" + label)
-							.text(label +" ")
+		$(item.list).each(function(index, el) {
+			list
+				.append(
+					$("<li>")
+						.append(
+							$("<a>")
+								.text(el.name)
+								.attr("href", "#")
+								.attr("data-group", i)
+								.attr("data-id", index)
+						)	
+				)
+		});
 
-							.append(
-								$("<span>").addClass('badge').text($(item.list).length)
-							)
-					)
-			)
-	);
+		var panel = $("<div>").addClass('panel panel-default');
 
-	panel.append(
-		$("<div>").addClass('panel-collapse collapse').attr("id", "collapse" + label)
-			.append(
-				$('<div>').addClass('panel-body')
-					.append(
-						$('<ul>').addClass('numerics')
-							.append(list)
-					)
-			)
-	)
+		panel.append(
+			$("<div>").addClass('panel-heading')
+				.append(
+					$('<div>').addClass('panel-title')
+						.append(
+							$('<a>')
+								.attr("data-toggle", "collapse")
+								.attr("data-parent", "#accordion")
+								.attr("aria-expanded", "false")
+								.attr("href", "#collapse" + label)
+								.text(label +" ")
 
-	acc.append(panel);
+								.append(
+									$("<span>").addClass('badge').text($(item.list).length)
+								)
+						)
+				)
+		);
+
+		panel.append(
+			$("<div>").addClass('panel-collapse collapse').attr("id", "collapse" + label)
+				.append(
+					$('<div>').addClass('panel-body')
+						.append(
+							$('<ul>').addClass('numerics')
+								.append(list)
+						)
+				)
+		)
+
+		acc.append(panel);
+	}
 }
