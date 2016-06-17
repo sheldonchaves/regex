@@ -1,0 +1,86 @@
+body {
+   
+}
+.accordion-menu .panel-body {
+    padding: 0px;
+    margin: 0px;
+}
+.accordion-menu .panel-heading {
+    background-color: #FFFFFF;
+}
+.accordion-menu .panel-heading:hover {
+    background: #f5f5f5;
+}
+.accordion-menu .panel {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+.accordion-menu h4 {
+    position: relative;
+}
+.accordion-menu h4 .accordion-menu-collapsible-icon {
+    position: absolute;
+    right: 0px;
+    top: 5px;
+    font-size: 9px;
+}
+.accordion-menu h4 a {
+    display: block;
+    color: #666666;
+}
+.accordion-menu h4 a.active,
+.accordion-menu h4 .active,
+.active {
+    text-decoration: none;
+}
+.accordion-menu h4 a:hover,
+.accordion-menu h4 a:focus {
+    text-decoration: none;
+    color: #222222;
+}
+.accordion-menu h4 .accordion-menu-title-icon {
+    float: right;
+    margin: 0;
+}
+.accordion-menu ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+.accordion-menu ul li .badge,
+.accordion-menu ul li span.badge,
+.accordion-menu ul li label.badge {
+    float: right
+}
+.accordion-menu ul li:last-child a {
+    border: 0px solid #f9f9f9;
+}
+.accordion-menu ul li a {
+    display: block;
+    line-height: 22px;
+    padding: 5px 15px;
+    margin: 0px;
+    border-bottom: 1px solid #e8e8e8;
+}
+.accordion-menu ul li a:hover {
+    color: #232323;
+    text-decoration: none;
+}
+.accordion-menu ul.bullets {
+    list-style: inside disc
+}
+.accordion-menu ul.numerics {
+    list-style: inside decimal
+}
+.accordion-menu ul.kas-icon-aero li a:before {
+    font-family: 'Glyphicons Halflings';
+    font-size: 9px;
+    content: "\e258";
+    padding-right: 8px;
+}
