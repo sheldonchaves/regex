@@ -39,8 +39,9 @@ function executaRegex(valores) {
 		resultados.push(geraResultado(mostraGrupos ? resultado.join(' ||| ') : resultado[0], resultado.index, objetoRegex.lastIndex, mostraIndex));
 	}
 
-
 	logaTempoDeExecucao(textoPattern, textoTarget);
+
+	
 
 	return resultados;
 }
@@ -139,10 +140,10 @@ function pegaValoresDoForm() {
   	_verifiqueInputs(inputTarget, inputPattern);
 
   	console.log('Target:  ' + inputTarget.value);
-  	console.log('Pattern: ' + inputPattern.value.trim());
+  	console.log('Pattern: ' + $("#pattern").text().trim());
 
   	return {'target': inputTarget.value.trim(), 
-  			'pattern': inputPattern.value, 
+  			'pattern': $("#pattern").text(), 
   			'mostraIndex': checkboxIndex.checked, 
   			'mostraGrupos' : checkboxGroups.checked};
 }
@@ -152,13 +153,13 @@ function _verifiqueInputs(inputTarget, inputPattern) {
 		inputTarget.placeholder = 'Digite um target';
 	}
 
-	if(!inputPattern.value) {
+	/*if(!$("#pattern").text()) {
 		inputPattern.placeholder = 'Digite um pattern';
-	}
-
-	if(!inputTarget.value || !inputPattern.value) {
+	}*/
+/*
+	if(!inputTarget.value || !$("#pattern").text()) {
 		throw Error('Valores invalidos');
-	}
+	}*/
 }
 
 function limparResultados() {
@@ -182,20 +183,42 @@ function montaPatternDeDataMaisLegivel() {
 
 /**********************************************************************************/
 
+function highlight() {
+    $("#pattern").each(function () {
+        var p = $(this).text().replace(new RegExp("\d", 'g'), "<span class='char-d'>" + '\d' + "</span>");
+        $(this).html(p);
+
+     
+    });
+}
 
 
 $( "#target, #pattern" ).keyup(function() {
 	if ($( "#pattern" ).val().length > 2){
   		executa(event);
+  		
 	}
 });
 
+
+
+$('#pattern').bind("keyup",function(){
+	highlight();
+	executa(event);
+});
+
+
+
+var textBasic1 = "image.png (21) 3216-2345 04013-010 7676.9999.22 15.123.321/8883-22 123.456.789-00 128.126.12.244 255.255.255.255"
+
 var accordions = [
 	{"name":"basic", "list":[
-		{"name":"file", "text":"image.png", "pattern":".*png"},
-		{"name":"filho2", "text":"texto", "pattern":"xxxx"},
-		{"name":"filho3", "text":"texto", "pattern":"xxxx"},
-		{"name":"filho4", "text":"texto", "pattern":"xxxx"},
+		{"name":"file", "text":textBasic1, "pattern":".*png"},
+		{"name":"cpf", 	"text":textBasic1, "pattern":'\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}'},
+		{"name":"cnpj", "text":textBasic1, "pattern":"\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}"},
+		{"name":"ip", 	"text":textBasic1, "pattern":"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}"},
+		{"name":"cep", 	"text":textBasic1, "pattern":"\\d{5}-\\d{3}"},
+		{"name":"fone", "text":textBasic1, "pattern":"\\(\\d{2}\\) \\d{3,4}-\\d{4}"},
 	]},
 	{"name":"test1"},
 	{"name":"test2"}
@@ -205,7 +228,23 @@ var acc = $("#accordion");
 
 $(function() {
 	makePanels ();
+
+	$(".action").click(function(event) {
+		loadExample($(this));
+	});
 });
+
+function loadExample(item){
+	var group = item.attr("data-group");
+	var id = item.attr("data-id");
+	
+	var item = accordions[group].list[id];
+
+	$("#target").val(item.text);
+	$("#pattern").text(item.pattern);
+	highlight();
+	executa(event);
+}
 
 
 function makePanels (item){
@@ -225,6 +264,7 @@ function makePanels (item){
 						.append(
 							$("<a>")
 								.text(el.name)
+								.addClass('action')
 								.attr("href", "#")
 								.attr("data-group", i)
 								.attr("data-id", index)

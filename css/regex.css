@@ -1,3 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+#pattern{
+	font-family: 'Montserrat', sans-serif;
+	    font-weight: 700;
+    font-size: 16px;
+}
+
+.char-d {
+	color: blue;
+}
+
 body {
    
 }
@@ -6,10 +18,12 @@ body {
     margin: 0px;
 }
 .accordion-menu .panel-heading {
-    background-color: #FFFFFF;
+    padding: 5px 10px;
+        background: #ddd;
 }
 .accordion-menu .panel-heading:hover {
-    background: #f5f5f5;
+        background: #337ab7;
+    color: #fff;
 }
 .accordion-menu .panel {
     -webkit-border-radius: 3px;
@@ -61,15 +75,24 @@ body {
 .accordion-menu ul li:last-child a {
     border: 0px solid #f9f9f9;
 }
+
+.accordion-menu ul li {
+font-size: 10px;
+}
+
 .accordion-menu ul li a {
     display: block;
-    line-height: 22px;
-    padding: 5px 15px;
-    margin: 0px;
+    /* line-height: 22px; */
+    padding: 1px 13px;
+    text-transform: uppercase;
+    /* margin: 0px; */
+    
     border-bottom: 1px solid #e8e8e8;
 }
+
 .accordion-menu ul li a:hover {
-    color: #232323;
+       background: #000;
+    color: #fff;
     text-decoration: none;
 }
 .accordion-menu ul.bullets {
@@ -83,4 +106,12 @@ body {
     font-size: 9px;
     content: "\e258";
     padding-right: 8px;
+}
+
+.badge {
+    padding: 2px 10px;
+    font-size: 10px;
+    margin-left: 5px;
+        float: right;
+    margin-top: 4px;
 }

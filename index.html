@@ -9,7 +9,7 @@
 
 <body>
     <div class="container">
-        <h1>Expressões regulares</h1>
+        <h1>Regular Expression</h1>
 
         <div class="row">
             <div class="col-sm-3 col-md-3">
@@ -24,27 +24,27 @@
                     <form class="form" >
 
                         <div class="form-group">
-                            <label for="target">Target string (alvo)</label>
-                            <input type="text" id="target" class="form-control" value="" autocomplete="off" required autofocus placeholder="Digite um target" />        
+                            <label for="target">Target string</label>
+                            <textarea type="text" id="target" class="form-control" value="" autocomplete="off" required autofocus placeholder="Digite um target" /></textarea>        
                         </div>    
 
                         <div class="form-group">
-                            <label for="pattern">Pattern (expressão regular)</label>
-                            <input type="text" id="pattern" class="form-control" value="" autocomplete="off" required  placeholder="Digite um pattern"/>
+                            <label for="pattern">Pattern (regex)</label>
+                            <div contenteditable="true" id="pattern" class="form-control" value="" autocomplete="off" required  placeholder="Digite um pattern"></div>
                         </div>
 
                         <div class="form-group">                
-                            <button class="btn btn-primary" onclick="executa(event)">Executar Regex</button>
+                            <button class="btn btn-primary" onclick="executa(event)">Execute</button>
                         </div>
 
                         <div class="checkbox">
-                            <label><input type="checkbox" id="mostraIndex" value="true" />Mostra índice </label>
+                            <label><input type="checkbox" id="mostraIndex" value="true" />Show index </label>
                             <label></label>
-                            <label><input type="checkbox" id="mostraGrupos" value="true" />Mostra grupos </label>
+                            <label><input type="checkbox" id="mostraGrupos" value="true" />Show groups </label>
                         </div>
 
                         <div class="form-group">
-                            <label for="resultado" id="labelResultados">Matches (resultados)</label>
+                            <label for="resultado" id="labelResultados">Matches</label>
                             <input type="text" id="resultado" class="form-control" value="" readonly />
                         </div>
 
@@ -57,11 +57,11 @@
 
 
 
-                    <div class="form-group">
-
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
-
-                    </div>
+                   <!--  <div class="form-group">
+                   
+                       <textarea class="form-control" rows="5" id="comment"></textarea>
+                   
+                   </div> -->
                 </div>
             </div>
         </div>
