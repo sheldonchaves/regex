@@ -1,0 +1,78 @@
+\w - classe de wordchar [A-Za-z0-9_]
+\s - classe de whitspaces [ \t\r\n\f]
+
+\t é um tab.
+\r é carriage return.
+\n é newline.
+\f é form feed.
+
+quantidade 
+? - zero ou uma vez.
+* - zero ou mais vezes.
++ - uma ou mais vezes.
+{n} - exatamente n vezes.
+{n,} - no mínimo n vezes.
+{n,m} - no mínimo n+1 vezes, no máximo m vezes.
+
+[A-Z] significa de A até Z, sempre maiúscula.
+[a-z] significa de a até z, sempre minúscula,
+[A-Za-z] significa A-Z ou a-z.
+[abc] significa a, b ou c.
+
+Ancoras
+\b - word boundary - não pode ter um wordchar 
+\B - non-word-boundary - tem que ter um wordchar 
+^ - no inicio
+$ - no final
+
+groups
+(\w+) - group of word chars
+(\w+)? - optional group of word chars
+(?:\w+) - Non-capturing groups
+(h1|h2) ... \/1 - back-references (if h1 first, group 1(\/1) is h1 too)
+
+
+
+placa de carro: ABC-0000
+[A-Z]{3}-\d{4}
+
+10 - Bruce, 9.5 - Miranda, 7.9    - Bob, 10 - Zimbabue, 7.5 - Bety
+[7]\.[5-9] - \w+
+
+BALEIRO GARROTE SERROTE GOLEIRO ROTEIRO
+only GARROTE SERROTE ROTEIRO
+[A-Z]*ROT[A-Z]+
+
+Abc333Abc1 asheldon11 2bc333Abc1 1UserName1 Xtest12345 aUser12aaa
+Username: 10 chars, first char letter 
+[a-zA-Z][a-zA-Z0-9]{9}
+
+
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+^Caused by:.*
+
+Data: 10/05/2001
+^Data:[\s]?[0-9]{2}\/[0-9]{2}\/[0-9]{4}$
+
+word aword worda aworda
+\Bword\B
+word aword worda aworda
+\bword\b
+
+
+28 de dezembro de 2008
+[0-3]?\d\s+de\s+[A-Za-zç]{4,9}\s+de\s+([12]\d{3})
+
+
+Z171PZ7AZ23PZ7819AZ78GZ1AZ99IZ34O
+Z\d+(\w)
+
+super.mario@caelum.com.br donkey.kong@alura.com.br bowser1@alura.com.br
+(\w+.\w+)@(caelum|alura)
+([a-z.]{5,15})\d?@(?:caelum.com.br|alura.com.br)
+
+
+<h1 class="text" >Regular Expression</h1>
+<h1.+?>((?:\s?\w)+)</h1>
+<h[1-5].+?>((?:\s?\w)+)</h[1-5]>
+<(h1|h2).+?>((?:\s?\w)+)</\1>

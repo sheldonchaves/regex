@@ -203,25 +203,33 @@ $( "#target, #pattern" ).keyup(function() {
 
 
 $('#pattern').bind("keyup",function(){
-	highlight();
+	//highlight();
 	executa(event);
 });
 
 
 
 var textBasic1 = "image.png (21) 3216-2345 04013-010 7676.9999.22 15.123.321/8883-22 123.456.789-00 128.126.12.244 255.255.255.255"
+var textDateBR = "28 de dezembro de 2008 31   de Janeiro de 1997 05 de janeiro de 1979, 31 de março de 2016"
 
 var accordions = [
 	{"name":"basic", "list":[
 		{"name":"file", "text":textBasic1, "pattern":".*png"},
 		{"name":"cpf", 	"text":textBasic1, "pattern":'\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}'},
 		{"name":"cnpj", "text":textBasic1, "pattern":"\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}"},
-		{"name":"ip", 	"text":textBasic1, "pattern":"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}"},
-		{"name":"cep", 	"text":textBasic1, "pattern":"\\d{5}-\\d{3}"},
+		{"name":"ip", 	"text":textBasic1, "pattern":/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g},
+		{"name":"cep", 	"text":textBasic1, "pattern":/\d{5}-\d{3}/g},
 		{"name":"fone", "text":textBasic1, "pattern":"\\(\\d{2}\\) \\d{3,4}-\\d{4}"},
 	]},
-	{"name":"test1"},
-	{"name":"test2"}
+	{"name":"test1", "list":[
+		{"name":"data extenso 1", "text":textDateBR, "pattern":"[0-3]?\\d\\s+de\\s+[A-Za-zç]{4,9}\\s+de\\s+[12]\\d{3}"},
+	]},
+
+	
+	
+	{"name":"test2", "list":[
+		{"name":"file", "text":textDateBR, "pattern":"[0-3]?\d\s+de\s+[A-Za-zç]{4,9}\s+de\s+[12]\d{3}"},
+	]}
 ];
 
 var acc = $("#accordion");
@@ -241,9 +249,12 @@ function loadExample(item){
 	var item = accordions[group].list[id];
 
 	$("#target").val(item.text);
-	$("#pattern").text(item.pattern);
-	highlight();
-	executa(event);
+	$("#pattern").text(String(item.pattern).replace(/[\/|\/g]/g,""));
+	//$("#pattern").text(String(item.pattern).substring(1, String(item.pattern).length-2));
+
+
+	//highlight();
+	//executa(event);
 }
 
 

@@ -1,0 +1,298 @@
+Usando regex nas diversas linguagens
+
+Nesse capítulo vamos dar uma olhada em várias linguagens de programação e como utilizar as regex nelas. Escolhemos as linguagens JavaScript, Ruby, Python, C# e Java. Cada vídeo aborda uma linguagem:
+Vídeo 2 sobre JavaScript.
+Vídeo 3 sobre Ruby.
+Vídeo 4 sobre PHP.
+Vídeo 5 sobre Python.
+Vídeo 6 sobre C#.
+Vídeo 7 sobre Java.
+Para facilitar, utilizaremos sempre o mesmo exemplo de regex: (\d\d)(\w) - dois dígitos e um word char, além de definir dois grupos. O nosso objetivo é executar a regex em cada linguagem, recebendo os grupos e as posições do match.
+
+Mãos à obra!
+
+Regex com JavaScript
+No mundo JavaScript, temos duas formas de construir uma expressão regular. A primeira é usada através da classe RegExp, como já vimos no nosso script:
+
+var exp = new RegExp("(\d\d)(\w)");
+A segunda forma usa uma expressão literal. Nesse caso, devemos colocar a expressão entre /pattern aqui/, por exemplo:
+
+var exp = /(\d\d)(\w)/;
+A segunda forma deve ser utilizada quando o pattern é constante, e possui um melhor desempenho, pois o navegador já compila a regex na hora de carregar o script.
+
+Flags importantes
+Em ambos os casos podemos combinar a regex com algumas flags, que indicam como aplicar o pattern. Por exemplo, no nosso script sempre usamos a flag g para fazer um match global, no alvo inteiro:
+
+var exp = /(\d\d)(\w)/g;
+Caso quisermos usar o objeto RegExp, é possível aplicar a flag no segundo parâmetro do construtor:
+
+var exp = new RegExp('(\d\d)(\w)', 'g');
+Temos mais duas flags para utilizar: i e m. A flag i significa ignorecase, ou seja, independente de letra maiúscula ou minúscula. A flag m significa multiline, para aplicar a regex linha por linha. Nesse caso, as âncoras ^ e $ selecionam o início e o fim de uma linha, e não da string inteira.
+
+Principais métodos do mundo JavaScript
+Uma vez o objeto regex criado, tanto faz com a classe ou de maneira literal, podemos usufruir dos métodos para encontrar o padrão no alvo.
+
+O primeiro método é o exec, que executa a regex e devolve um array com as informações sobre o match. Por exemplo, vamos definir uma regex com um grupo e chamar o método exec:
+
+var regex = /(\d\d)(\w)/g; //2 dígitos e 1 word char, dois grupos
+var resultado = regex.exec('11a22b33c ');
+O resultado possui as informações sobre primeiro match:
+
+console.log(resultado[0]); //devolve o match inteiro: 11a
+console.log(resultado[1]); //devolve o primeiro grupo: 11
+console.log(resultado[2]); //devolve o segundo grupo a
+console.log(resultado.index); //devolve a posição onde o match começo no alvo: 0
+console.log(regex.lastIndex); //devolve a última posição do match: 3
+Para pegar o próximo match, devemos chamar novamente o método exec:
+
+var resultado = regex.exec('11a22b33c ');
+console.log(resultado[0]); //devolve o match inteiro: 22b
+console.log(resultado[1]); //devolve o primeiro grupo: 22
+console.log(resultado[1]); //devolve o primeiro grupo: b
+console.log(resultado.index); //devolve a posição onde o match começo no alvo: 3
+console.log(regex.lastIndex); //devolve a última posição do match: 6
+Se não há mais nenhum match, o método exec devolve null.
+
+Caso só quisermos saber se há algum match, existe o método test, que devolve um booleano:
+
+console.log(regex.test('11a22b')); //true
+Regex com Ruby
+No Ruby também existe uma sintaxe literal para definir a expressão regular, por exemplo:
+
+> regex = /(\d\d)(\w)/
+A partir daí, podemos usar o método match para aplicar a regex no alvo:
+
+> alvo = "12a34b56c"
+> resultado = regex.match("12a34b56c")
+O método match devolve um objeto que representa o primeiro match e através dele podemos pegar o match inteiro, grupos e os índices:
+
+> resultado[0]
+12a
+> resultado[1]
+12
+> resultado.begin 0 #inicio do match inteiro
+0
+> resultado.begin 1 #inicio do grupo
+0
+> resultado.end 0 #fim do match inteiro
+3
+> resultado.end 1 #fim do grupo
+2
+Para pegar todos os grupos e fazer um match global, devemos utilizar o método scan, da classe String:
+
+> regex = /(\d\d)(\w)/ #lembrando dois grupos
+> alvo = "12a34b56c"
+> resultados = alvo.scan regex
+=> [["12", "a"], ["34", "b"], ["56", "c"]]
+Repare que cada posição possui agora dois elementos, que podemos testar:
+
+> resultados[2][1]
+=> "c"
+Nos exercícios veremos como usar os dois métodos fundamentais: sub e gsub, para substituir uma parte da string através de uma regex.
+
+Usando Regex com PHP
+No PHP devemos definir uma regex dentro do caracteres ~regex aqui~, por exemplo:
+
+$regexp = '~(\d\d)(\w)~';
+Para executar e encontrar o primeiro match, usamos a função preg_match:
+
+$alvo = '12a34b56c';
+$achou = preg_match($regexp, $alvo, $match);
+A função devolve um booleano (na verdade 0 ou 1) para indicar o sucesso ou não. Os resultados estão guardados na variável $match. Assim podemos imprimir o primeiro match:
+
+> echo $match[0];
+12a
+> echo $match[1];
+12
+> echo $match[2];
+a
+Caso desejemos receber os índices, devemos passar mais um parâmetro na função preg_match:
+
+$achou = preg_match($regexp, $alvo, $match, PREG_OFFSET_CAPTURE);
+Imprimindo:
+
+print_r($match);
+Array
+(
+[0] => Array
+(
+
+[0] => 12a
+
+[1] => 0
+
+)
+
+[1] => Array
+
+(
+
+[0] => 12
+
+[1] => 0
+
+)
+
+[2] => Array
+
+(
+
+[0] => a
+
+[1] => 2
+
+)
+)
+Para, por exemplo, acessar o índice do segundo grupo usamos:
+
+> echo $match[2][1]; //inicio do segundo grupo a
+2
+Igualmente também tem um método que busca todos os resultados da regex dentro do alvo:
+
+$achou = preg_match_all($regexp, $alvo, $matches);
+A função preg_match_all cria um array bidimensional. Na primeira posição tem todos os resultados do match inteiro:
+
+> echo $matches[0][0];
+12a
+> echo $matches[0][1];
+34b
+> echo $matches[0][2];
+56c
+A segunda posição possui todos os matches do primeiro grupo, e a terceira do segundo grupo:
+
+> echo $matches[1][0];
+12
+> echo $matches[2][0];
+a
+Na função preg_match_all, também existe o parâmetro PREG_OFFSET_CAPTURE, para receber os índices. Nesse caso será criado um array de 3 dimensões.
+
+Regex com Python
+O primeiro passo é importar o módulo re do Python, responsável pelas expressões regulares:
+
+import re
+O modulo re possui uma série de funções para trabalharmos com expressões regulares.
+
+Vamos começar pelo método re.search. Ele recebe como primeiro parâmetro o padrão e como segundo uma string que será vasculhada:
+
+>>> resultado = re.search(r'\d\d\w','11a22b33c')
+`
+Repare o r na frente do pattern. Essa letra define uma raw string, isto é, uma string que não escapa nenhum caractere por padrão.
+
+Quando chamamos o método search, recebemos um resultado que possui a string encontrada junto com os grupos e as posições de cada um, basta chamar os métodos:
+
+>>> resultado = re.search(r'(\d\d)\w','11a22b33c')
+>>> resultado.group()
+11a
+>>> resultado.group(1)
+11
+>>>resultado.start()
+0 
+>>>resultado.end()
+3
+É importante saber que o método search não aplica a regex globalmente e apenas devolve informações sobre o primeiro match. Para aplicar a regex na string inteira e devolver todas as informações, existe o método re.finditer:
+
+>>> resultados = re.finditer(r'(\d\d)\w','11a22b33c')
+>>> for resultado in resultados:
+...     print "%s com grupo %s [%s,%s]" % (resultado.group(), resultado.group(1),resultado.start(), resultado.end())
+... 
+11a com grupo 11 [0,3]
+22b com grupo 22 [3,6]
+33c com grupo 33 [6,9]
+Para melhorar o desempenho, o Python também possui uma forma de compilar a regex antes de usá-la:
+
+regex = re.compile(r'(\d\d)\w')
+resultados = regex.finditer('11a22b33c')
+Regex com CSharp
+O mundo .Net e C# não pode ficar de fora e claro, também dão suporte de primeira para usar as expressões regulares. A classe principal se chama Regex, do namespace System.Text.RegularExpressions e recebe o pattern no construtor:
+
+Regex regexp = new Regex(@"(\d\d)(\w)");
+Repare que a string possui um @ na sua frente. Isso é útil e melhora a legibilidade, pois não é preciso escapar o caractere \.
+
+Uma vez o objeto Regex criado, podemos chamar o método match para executar uma busca simples, e o método Matches para buscar todos os matches dentro do alvo:
+
+string alvo = "12a34b56c";
+Regex regexp = new Regex(@"(\d\d)(\w)");
+
+MatchCollection resultados = regexp.Matches(alvo);
+O objeto do tipo MatchCollection possui todas as informações sobre cada match, basta iterar:
+
+foreach(Match resultado in resultados) {
+    Console.WriteLine(resultado.Value);//imprime 12a,34b,56c
+    Console.WriteLine(resultado.Groups[1]); //imprime 12, 34, 56 
+    Console.WriteLine(resultado.Groups[2]); //imprime a, b, c
+    Console.WriteLine(resultado.Index); //imprime 0, 3, 6
+    Console.WriteLine(resultado.Length)); //imprime 3, 3, 3
+}
+Suporte excelente pelo C#, não? Segue uma vez o código completo:
+
+using System.Text.RegularExpressions;
+namespace ExemploRegex
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string alvo = "12a34b56c";
+            Regex regexp = new Regex(@"(\d\d)(\w)");
+
+            MatchCollection resultados = regexp.Matches(alvo);
+            foreach(Match resultado in resultados)
+            {
+                Console.WriteLine(string.Format("Resultado: {0}, Grupos: {1} e {2}, Index: [{3},{4}]", 
+                    resultado.Value, 
+                    resultado.Groups[1], 
+                    resultado.Groups[2],
+                    resultado.Index,
+                    (resultado.Index+resultado.Length)));
+                    Console.WriteLine("--------------");
+            }
+        }
+    }
+}
+Usando Regex com Java
+No mundo Java, a classe principal para trabalhar com expressões regulares se chama Pattern e faz parte do pacote java.util.regex.
+
+Para criar uma regex, devemos usar o método estático compile(regexString), da classe Pattern, por exemplo:
+
+Pattern pattern = Pattern.compile("(\\d\\d)(\\w)");
+Repare que foi necessário escapar o símbolo \. Outra coisa para notar é que o Java não possui uma sintaxe literal para a definição de regex.
+
+Uma vez declarado o pattern, devemos criar um objeto Matcher, baseado na string de entrada:
+
+Matcher matcher = pattern.matcher("11a22b33c");
+Esse matcher possui, por sua vez, os métodos para acessar o match, o grupo, index, etc, mas antes de tudo devemos chamar o método find, que verifica se realmente há um match devolvendo true ou false:
+
+boolean encontrou = matcher.find();
+A partir daí podemos pegar os valores do match:
+
+if(encontrou) {
+    String match = matcher.group();
+    String group1 = matcher.group(1);
+    String group2 = matcher.group(2);
+
+    int start = matcher.start();
+    int end = matcher.end();
+
+    System.out.printf("%s | %s |  %s [%d,%d] %n", match, group1, group2, start, end);
+}
+Sabendo disso, podemos colocar o nosso código dentro de um laço while para mostrar todos os resultados:
+
+public class TesteRegex {
+
+    private static Pattern pattern = Pattern.compile("(\\d\\d)(\\w)");
+
+    public static void main(String[] args) {
+
+        Matcher matcher = pattern.matcher("11a22b33c");
+        while(matcher.find()) {
+            String match = matcher.group();
+            String group1 = matcher.group(1);
+            String group2 = matcher.group(2);
+
+            int start = matcher.start();
+            int end = matcher.end();
+
+            System.out.printf("%s | %s |  %s [%d,%d] %n", match, group1, group2, start, end);
+        }
+    }
+}
