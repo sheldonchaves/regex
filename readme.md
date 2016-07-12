@@ -72,7 +72,7 @@
 
 | code | desc |
 |--------|--------|
-|\|Escape following character
+|\	|Escape following character
 |\Q|Begin literal sequence
 |\E|End literal sequence
 
@@ -131,7 +131,7 @@
 |$n|nth non-pa­ssive group
 |$2|"­xyz­" in /^(abc­(xy­z))$/
 |$1|"­xyz­" in /^(?:a­bc)­(xyz)$/
-|$`|Before matched string
+|$&#96;|Before matched string
 |$'|After matched string
 |$+|Last matched string
 |$&|Entire matched string
